@@ -51,7 +51,7 @@ routes.get('/buscar-emails', (req, res) => {
 
                 console.log('VENDEDOR: ', seller_id)
                 console.log('TOTAL: ', total)
-                console.time('TempoBuscas')
+                //console.time('TempoBuscas')
                 emails.push(...(await buscarPorOrderPackId(ordersPackId, seller_id, access_token)));
 
                 //console.log(emails);
@@ -95,7 +95,7 @@ routes.get('/buscar-emails', (req, res) => {
                     });
 
                 }
-                console.timeEnd('TempoBuscas')
+                //console.timeEnd('TempoBuscas')
                 console.log('FIM ==========|')
             })
         }
