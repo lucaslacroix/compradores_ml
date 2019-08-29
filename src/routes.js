@@ -65,10 +65,10 @@ routes.get('/buscar-emails', async (req, res) => {
                                     console.log('INSERT ERROR: ', err);
                                 }
 
-                                console.log('inseriu');
+                                //console.log('inseriu');
                             });
                         } else {
-                            console.log('já existe, não inserir');
+                            //console.log('já existe, não inserir');
                         }
                     });
                 }
