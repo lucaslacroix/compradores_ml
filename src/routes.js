@@ -54,35 +54,35 @@ routes.get('/buscar-emails', async (req, res) => {
                         }
 
                         //console.log(selectEmailsResult);
-                        if (selectEmailsResult.length > 0) {
-                            return;
-                        }
+                        // if (selectEmailsResult.length > 0) {
+                        //     return;
+                        // }
 
-                        const apelido = emails[email].nickname,
-                            complementoTelefone = emails[email].phone.extension,
-                            codigoArea = emails[email].phone.area_code,
-                            emailEmail = emails[email].email,
-                            idComprador = emails[email].id,
-                            name = emails[email].first_name,
-                            docNumber = emails[email].billing_info.doc_number,
-                            lastName = emails[email].last_name,
-                            numeroTelefone = emails[email].phone.number,
-                            docType = emails[email].billing_info.doc_type,
-                            idConta = seller_id;
+                        const apelido = emails[email].nickname ? `'${emails[email].nickname}'` : null,
+                            complementoTelefone = emails[email].phone.extension ? `'${emails[email].phone.extension}'` : null,
+                            codigoArea = emails[email].phone.area_code ? `'${emails[email].phone.area_code}'` : null,
+                            emailEmail = emails[email].email ? `'${emails[email].email}'` : null,
+                            idComprador = emails[email].id ? `'${emails[email].id}'` : null,
+                            name = emails[email].first_name ? `'${emails[email].first_name}'` : null,
+                            docNumber = emails[email].billing_info.doc_number ? `'${emails[email].billing_info.doc_number}'` : null,
+                            lastName = emails[email].last_name ? `'${emails[email].last_name}'` : null,
+                            numeroTelefone = emails[email].phone.number ? `'${emails[email].phone.number}'` : null,
+                            docType = emails[email].billing_info.doc_type ? `'${emails[email].billing_info.doc_type}'` : null,
+                            idConta = seller_id ? `'${seller_id}'` : null;
 
 
-                        if (selectEmailsResult.length <= 0) {
-                            const insertQuery = `INSERT INTO desmascaradostmp (APELIDO, COMPLEMENTOTELEFONE, DDD, EMAIL, IDCOMPRADOR, NOME, NUMERODOCUMENTO, SOBRENOME, TELEFONE, TIPODOCUMENTO, idConta) VALUES (${apelido}, ${complementoTelefone}, ${codigoArea}, ${emailEmail}, ${idComprador}, ${name}, ${docNumber}, ${lastName}, ${numeroTelefone}, ${docType}, ${idConta});`
-                            db.query(insertQuery, async (err, insertResult, field) => {
-                                if (err) {
-                                    console.log('INSERT ERROR: ', err);
-                                }
+                        // if (selectEmailsResult.length <= 0) {
+                        const insertQuery = `INSERT INTO desmascaradostmp (APELIDO, COMPLEMENTOTELEFONE, DDD, EMAIL, IDCOMPRADOR, NOME, NUMERODOCUMENTO, SOBRENOME, TELEFONE, TIPODOCUMENTO, idConta) VALUES (${apelido}, ${complementoTelefone}, ${codigoArea}, ${emailEmail}, ${idComprador}, ${name}, ${docNumber}, ${lastName}, ${numeroTelefone}, ${docType}, ${idConta});`
+                        db.query(insertQuery, async (err, insertResult, field) => {
+                            if (err) {
+                                console.log('INSERT ERROR: ', err);
+                            }
 
-                                console.log('inseriu');
-                            });
-                        } else {
-                            //console.log('já existe, não inserir');
-                        }
+                            console.log('inseriu');
+                        });
+                        // } else {
+                        //console.log('já existe, não inserir');
+                        // }
                     });
                 }
             })
