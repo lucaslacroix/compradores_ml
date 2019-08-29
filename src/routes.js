@@ -25,26 +25,33 @@ routes.get('/buscar-emails', async (req, res) => {
                 if (access_token === 'DESATIVADO') return;
 
                 const ordersPackId = []
+                let total = 50;
+                let offset = 0;
+                const limit = 50;
 
-                const ordersRes = await fetch(`https://api.mercadolibre.com/orders/search/recent?seller=${seller_id}&access_token=${access_token}`);
+                for (let i = 0; i < total; i += 50) {
+                    const ordersRes = await fetch(`https://api.mercadolibre.com/orders/search/recent?seller=${seller_id}&access_token=${access_token}&offset=${i}&limit=${limit}`);
 
-                const { results } = await ordersRes.json();
+                    const resultado = await ordersRes.json();
+                    const { results, paging } = resultado
+                    if (results) {
+                        //console.log(resultado);
+                        total = paging.total;
+                        for (let resu in results) {
+                            //console.log(results[resu]);
+                            const { pack_id } = results[resu];
 
-
-                for (let resu in results) {
-                    //console.log(results[resu]);
-                    const { pack_id } = results[resu];
-
-                    if (pack_id) {
-                        ordersPackId.push({ pack_id, buyer: { ...results[resu].buyer } });
+                            if (pack_id) {
+                                ordersPackId.push({ pack_id, buyer: { ...results[resu].buyer } });
+                            }
+                        }
                     }
                 }
-
                 if (ordersPackId.length <= 0) return;
 
-                console.log('VENDEDOR: ', seller_id);
-                console.log('TOTAL: ', results.total);
-                console.time('TempoBuscas');
+                console.log('VENDEDOR: ', seller_id)
+                console.log('TOTAL: ', total)
+                console.time('TempoBuscas')
                 emails.push(...(await buscarPorOrderPackId(ordersPackId, seller_id, access_token)));
 
                 //console.log(emails);
@@ -88,10 +95,10 @@ routes.get('/buscar-emails', async (req, res) => {
                     });
 
                 }
-                console.timeEnd('TempoBuscas');
+                console.timeEnd('TempoBuscas')
+                console.log('FIM ==========|')
             })
         }
-        console.log('FIM ==========|')
     })
     return res.json({ ok: true });
 })
