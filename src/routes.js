@@ -30,7 +30,7 @@ routes.get('/buscar-emails', (req, res) => {
                 const limit = 50;
 
                 for (let i = 0; i < total; i += 50) {
-                    const ordersRes = await fetch(`https://api.mercadolibre.com/orders/search/recent?seller=${seller_id}&access_token=${access_token}&offset=${i}&limit=${limit}`);
+                    const ordersRes = await fetch(`https://api.mercadolibre.com/orders/search?seller=${seller_id}&access_token=${access_token}&offset=${i}&limit=${limit}&order.date_created.from=2019-07-01T00:00:00.000-00:00&order.date_created.to=2019-08-27T00:00:00.000-00:00`);
 
                     const resultado = await ordersRes.json();
                     const { results, paging } = resultado
