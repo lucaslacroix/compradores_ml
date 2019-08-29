@@ -47,7 +47,7 @@ routes.get('/buscar-emails', async (req, res) => {
                 //console.log(seller_id, access_token);
                 //console.log(emails);
                 for (let email in emails) {
-                    const selectEmailsQuery = `SELECT desmascaradostmp.IDCOMPRADOR FROM desmascaradostmp WHERE desmascaradostmp.IDCOMPRADOR = '${emails[email].user_id}' AND desmascaradostmp.idConta = ${seller_id}`
+                    const selectEmailsQuery = `SELECT desmascaradostmp.IDCOMPRADOR FROM desmascaradostmp WHERE desmascaradostmp.IDCOMPRADOR = ${emails[email].user_id} AND desmascaradostmp.idConta = ${seller_id}`
                     db.query(selectEmailsQuery, async (err, selectEmailsResult, field) => {
                         if (err) {
                             console.log('INSERT ERROR: ', err);
