@@ -54,9 +54,9 @@ routes.get('/buscar-emails', async (req, res) => {
                         }
 
                         //console.log(selectEmailsResult);
-                        // if (selectEmailsResult.length > 0) {
-                        //     return;
-                        // }
+                        if (selectEmailsResult.length > 0) {
+                            return;
+                        }
 
                         const apelido = emails[email].nickname ? `'${emails[email].nickname}'` : null,
                             complementoTelefone = emails[email].phone.extension ? `'${emails[email].phone.extension}'` : null,
@@ -71,16 +71,16 @@ routes.get('/buscar-emails', async (req, res) => {
                             idConta = seller_id ? `'${seller_id}'` : null;
 
 
-                        // if (selectEmailsResult.length <= 0) {
-                        const insertQuery = `INSERT INTO desmascaradostmp (APELIDO, COMPLEMENTOTELEFONE, DDD, EMAIL, IDCOMPRADOR, NOME, NUMERODOCUMENTO, SOBRENOME, TELEFONE, TIPODOCUMENTO, idConta) VALUES (${apelido}, ${complementoTelefone}, ${codigoArea}, ${emailEmail}, ${idComprador}, ${name}, ${docNumber}, ${lastName}, ${numeroTelefone}, ${docType}, ${idConta});`
-                        db.query(insertQuery, async (err, insertResult, field) => {
-                            if (err) {
-                                console.log('INSERT ERROR: ', err);
-                            }
+                        if (selectEmailsResult.length <= 0) {
+                            const insertQuery = `INSERT INTO desmascaradostmp (APELIDO, COMPLEMENTOTELEFONE, DDD, EMAIL, IDCOMPRADOR, NOME, NUMERODOCUMENTO, SOBRENOME, TELEFONE, TIPODOCUMENTO, idConta) VALUES (${apelido}, ${complementoTelefone}, ${codigoArea}, ${emailEmail}, ${idComprador}, ${name}, ${docNumber}, ${lastName}, ${numeroTelefone}, ${docType}, ${idConta});`
+                            db.query(insertQuery, async (err, insertResult, field) => {
+                                if (err) {
+                                    console.log('INSERT ERROR: ', err);
+                                }
 
-                            //console.log('inseriu');
-                        });
-                        // } else {
+                                //console.log('inseriu');
+                            });
+                        }
                         //console.log('já existe, não inserir');
                         // }
                     });
