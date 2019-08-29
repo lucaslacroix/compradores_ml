@@ -43,6 +43,7 @@ routes.get('/buscar-emails', async (req, res) => {
                 if (ordersPackId.length <= 0) return;
 
                 console.log('VENDEDOR: ', seller_id);
+                console.log('TOTAL: ', results.total);
                 console.time('TempoBuscas');
                 emails.push(...(await buscarPorOrderPackId(ordersPackId, seller_id, access_token)));
 
