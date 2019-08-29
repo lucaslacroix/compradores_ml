@@ -99,6 +99,7 @@ routes.get('/buscar-emails', (req, res) => {
                 console.log('FIM ==========|')
             })
         }
+        console.log('FINALMENTE GEROU');
     })
     return res.json({ ok: true });
 })
