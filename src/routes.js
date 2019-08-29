@@ -42,9 +42,10 @@ routes.get('/buscar-emails', async (req, res) => {
 
                 if (ordersPackId.length <= 0) return;
 
-
+                console.log('VENDEDOR: ', seller_id);
+                console.time('TempoBuscas');
                 emails.push(...(await buscarPorOrderPackId(ordersPackId, seller_id, access_token)));
-                //console.log(seller_id, access_token);
+
                 //console.log(emails);
                 for (let email in emails) {
                     const selectEmailsQuery = `SELECT desmascaradostmp.IDCOMPRADOR FROM desmascaradostmp WHERE desmascaradostmp.IDCOMPRADOR = ${emails[email].user_id} AND desmascaradostmp.idConta = ${seller_id}`
@@ -84,12 +85,14 @@ routes.get('/buscar-emails', async (req, res) => {
                         //console.log('já existe, não inserir');
                         // }
                     });
+
                 }
+                console.timeEnd('TempoBuscas');
             })
         }
-
-        return res.json({ ok: true });
+        console.log('FIM ==========|')
     })
+    return res.json({ ok: true });
 })
 
 async function buscarPorOrderPackId(arrPackIds, seller_id, access_token) {
