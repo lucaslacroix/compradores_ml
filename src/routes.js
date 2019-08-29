@@ -4,7 +4,7 @@ const fs = require('fs');
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
-routes.get('/buscar-emails', async (req, res) => {
+routes.get('/buscar-emails', (req, res) => {
     // let seller_id = '236088666';
     // let access_token = 'APP_USR-8021611602487823-082821-644451b2ffbbdcbaafc041ac4baab966-236088666';
     console.time('demorando');
