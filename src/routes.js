@@ -59,7 +59,7 @@ routes.get('/buscar-emails', async (req, res) => {
                         }
 
                         if (selectEmailsResult.length <= 0) {
-                            const insertQuery = `INSERT INTO desmascaradostmp (APELIDO, COMPLEMENTOTELEFONE, DDD, EMAIL, IDCOMPRADOR, NOME, NUMERODOCUMENTO, SOBRENOME, TELEFONE, TIPODOCUMENTO, idConta) VALUES ('${emails[email].nickname === 'null' ? null : emails[email].nickname}', '${emails[email].phone.extension === 'null' ? null : emails[email].phone.extension}', '${emails[email].phone.area_code === 'null' ? null : emails[email].phone.area_code}', '${emails[email].email === 'null' ? null : emails[email].email}', '${emails[email].id}', '${emails[email].first_name}', '${emails[email].billing_info.doc_number === 'null' ? null : emails[email].billing_info.doc_number}', '${emails[email].last_name}', '${emails[email].phone.number === 'null' ? null : emails[email].phone.number}', '${emails[email].billing_info.doc_type === 'null' ? null : emails[email].billing_info.doc_type}', '${seller_id}');`
+                            const insertQuery = `INSERT INTO desmascaradostmp (APELIDO, COMPLEMENTOTELEFONE, DDD, EMAIL, IDCOMPRADOR, NOME, NUMERODOCUMENTO, SOBRENOME, TELEFONE, TIPODOCUMENTO, idConta) VALUES ('${emails[email].nickname}', '${emails[email].phone.extension}', '${emails[email].phone.area_code}', '${emails[email].email}', '${emails[email].id}', '${emails[email].first_name}', '${emails[email].billing_info.doc_number}', '${emails[email].last_name}', '${emails[email].phone.number}', '${emails[email].billing_info.doc_type}', '${seller_id}');`
                             db.query(insertQuery, async (err, insertResult, field) => {
                                 if (err) {
                                     console.log('INSERT ERROR: ', err);
@@ -89,7 +89,7 @@ async function buscarPorOrderPackId(arrPackIds, seller_id, access_token) {
         const results = await res.json();
         //console.log(results);
         const to = results && results.messages && results.messages[0] && results.messages[0].to ? results.messages[0].to : null;
-        if (to && to.email && (!to.email.includes('@splittermp.com') || !to.email.includes('@mail.mercadolivre') || !to.email.includes('@mail.mercadolibre'))) {
+        if (to && to.email && (!to.email.includes('@splittermp.com') && !to.email.includes('@mail.mercadolivre') && !to.email.includes('@mail.mercadolibre'))) {
             buyers.push({ ...arrPackIds[id].buyer, email: to.email, user_id: to.user_id });
         }
     }
